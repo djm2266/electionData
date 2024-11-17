@@ -6,11 +6,11 @@ execute:
   echo: true
 
 book:
-  title: "YOUR PROJECT TITLE"
+  title: "Election Data Analysis"
   author:
-    - AUTHOR1 (UNI1)
-    - AUTHOR2 (UNI2)
-  repo-url: https://github.com/YOUR_GITHUB_ACCOUNT/REPO_NAME
+    - Daphne Manning (djm2266)
+    - Jie Hu (jh4741)
+  repo-url: https://github.com/djm2266/electionData.git
   date: today
   page-footer:
     right: |
