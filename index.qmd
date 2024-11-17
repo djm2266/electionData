@@ -1,1 +1,21 @@
 # Introduction
+We plan to analyze patterns, trends, and shifts in the political landscape of the United States over time. By examining presidential, Senate, and House elections from 1976 to 2020, we aim to uncover insights into voter behavior, party dominance, regional political trends, and the impact of national events on electoral outcomes. This period, spanning more than four decades, covers significant milestones in U.S. history, including shifts in party alignment, demographic changes, and major political movements.
+
+Why We Chose This Topic:
+Elections are an important part of democracy, and understanding how they evolve over time is critical for understanding the broader socio-political condition of the nation. This topic is particularly relevant because it captures federal elections across three key levels: presidential, Senate, and House. This allows for the exploration of how national events and regional issues influence electoral outcomes. We aim to use this analysis to identify patterns that are often obscured in shorter-term studies, such as long-term trends in partisanship, the rise of swing states, and the interaction between national and local election dynamics.
+
+Key Questions of Interest:
+How have voting patterns shifted over time at the state level for presidential, Senate, and House elections?
+Which states consistently lean toward a particular party, and how have swing states evolved?
+How closely do Senate and House election outcomes correlate with presidential election results in the same state and year?
+Are there instances of ticket splitting (voters choosing candidates from different parties for different offices) and what might explain these instances?
+How do significant historical events (for example, the 2008 financial crisis, the post-9/11 era, or the civil rights movement) reflect in election results?
+How has voter turnout changed across states and election types over the years?
+
+Context for Readers:
+Presidential Elections (every 4 years): Electors vote for the president and vice president based on the Electoral College system. This often highlights the polarization or unity of the national electorate.
+Senate Elections (every 6 years per senator): Each state elects two senators, with approximately one-third of the Senate up for election every two years. Senate races often reflect statewide issues and can show how state dynamics diverge from national trends.
+House Elections (every 2 years): Each state's representation in the House of Representatives is proportional to its population. These races tend to be more localized and can provide insights into regional political dynamics.
+By comparing these election types over time, we aim to provide a comprehensive view of how U.S. political behavior evolves at both the state and national levels.
+
+This study uses detailed datasets for presidential, Senate, and House elections from 1976 to 2020, enabling an in-depth exploration of these themes. Our findings can serve as a valuable resource for anyone interested in the patterns and processes that shape U.S. elections.
