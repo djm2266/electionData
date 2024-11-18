@@ -56,3 +56,84 @@ Data Quality: There are missing or incomplete fields in some years for minor-par
 
 ## Missing value analysis
 
+```{r setup}
+options(repos = c(CRAN = "https://cloud.r-project.org/")) 
+install.packages("naniar")
+library(naniar)
+library(ggplot2)
+.libPaths()
+install.packages("naniar", dependencies = TRUE)
+install.packages("dplyr")
+library(dplyr)
+```
+
+```{r}
+president <- read.csv('1976-2020-president.csv')
+house <- read.csv('1976-2022-house.csv')
+senate <- read.csv('1976-2020-senate.csv')
+```
+
+```{r}
+summary(is.na(president))
+colSums(is.na(president))
+```
+
+```{r}
+vis_miss(president) +
+  labs(title = "Missing Values in President Dataset",
+    x = "Variables",
+    y = "Observations")
+
+president_cleaned <- president[, !(colnames(president) %in% c("notes"))]
+president_cleaned <- na.omit(president_cleaned)
+vis_miss(president_cleaned) +
+  labs(title = "Missing Values in President Dataset After Cleaning",
+    x = "Variables",
+    y = "Observations")
+```
+
+The summary of data information and the visualization of missing values in the presidential election dataset reveals that most variables are complete, with no missing values, such as year, state, and totalvotes. However, the notes variable is entirely missing (100%), which likely indicates that there were no special remarks or annotations needed for the observations. Given its lack of content and relevance, we have decided to remove this column from the dataset to streamline the analysis. Additionally, the writein variable shows a very small proportion of missing values (less than 0.1%), which are unlikely to significantly impact the dataset’s overall integrity. Since the writein column has only three missing values, which might be due to oversight during data collection or data loss, we have decided to remove the rows containing these missing values to maintain the integrity of the analysis.
+
+```{r}
+summary(is.na(house))
+colSums(is.na(house))
+```
+
+```{r}
+vis_miss(house) +
+  labs(title = "Missing Values in House Dataset",
+    x = "Variables",
+    y = "Observations")
+
+runoff_missing <- house[is.na(house$runoff), ]
+runoff_missing_by_year <- runoff_missing |>count(year)
+ggplot(runoff_missing_by_year, aes(x = factor(year), y = n)) +
+  geom_bar(stat = "identity", fill = "lightblue") +
+  labs(title = "Distribution of Runoff Missing Values by Year",
+    x = "Year",
+    y = "Number of Missing Values") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+house_cleaned <- house[, !(colnames(house) %in% c("runoff"))]
+vis_miss(house_cleaned) +
+  labs(title = "Missing Values in House Dataset After Cleaning",
+    x = "Variables",
+    y = "Observations")
+```
+
+The summary of data information and the visualization shows that the missing values in the runoff column are distributed relatively evenly across the years, suggesting that the missing data may be due to inconsistencies or issues in the data collection process. Given the high percentage of missing values in this column (28%) and its relatively low importance for our analysis, we have decided to remove the runoff column entirely to streamline the dataset and focus on more relevant variables.
+
+```{r}
+summary(is.na(senate))
+colSums(is.na(senate))
+```
+
+```{r}
+vis_miss(senate) +
+  labs(title = "Missing Values in Senate Dataset",
+    x = "Variables",
+    y = "Observations")
+```
+
+The plot shows that there are no missing values in senate data, so we do not make any modification to this data. 
