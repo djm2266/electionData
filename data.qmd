@@ -138,7 +138,7 @@ summary(is.na(senate))
 colSums(is.na(senate))
 ```
 
-```{r}
+```{r, fig.keep="none", results="hide", fig.show="hide"}
 senate_p <- plot_missing(senate) +
   labs(title = "Missing Values in Senate Dataset",
     x = "Variables",
