@@ -8,7 +8,7 @@ Primary Source: https://electionlab.mit.edu/data
 Data Sources:
 
 1. Presidential Election Results (1976-2020)
-Source:https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/42MVDX
+Source: https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/42MVDX
 Description:
 This dataset contains state-level presidential election results, including vote counts for major parties, minor parties, and independent candidates. It provides data on total votes cast, voter turnout, and percentage share of each candidate in every presidential election from 1976 to 2020.
 Data Format:
@@ -21,7 +21,7 @@ Planned Import:
 Data will be imported into R Studio using the read.csv function. 
 
 2. Senate Election Results (1976-2020)
-Source:https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/PEJ5QU
+Source: https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/PEJ5QU
 Description:
 This dataset provides results for Senate elections, including candidate vote counts, party affiliations, and special elections. Data covers statewide elections and includes party-specific turnout information.
 Data Format:
@@ -34,7 +34,7 @@ Planned Import:
 Data will be imported into R Studio using the read.csv function. 
 
 3. House Election Results (1976-2022)
-Source:https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/IG0UN2
+Source: https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/IG0UN2
 Description:
 This dataset includes congressional district-level results for House elections, with details on candidates, vote counts, and party affiliations.
 Data Format:
