@@ -67,4 +67,60 @@ ggplot(combined_data, aes(x = factor(year), y = Percent, fill = Party)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
 ```
+```{r}
+# Prepare the data
+diverging_data <- joined_data %>%
+  mutate(Election_Type = "House") %>%
+  select(state, year, Election_Type, DEMOCRAT_House, REPUBLICAN_House) %>%
+  rename(
+    DEMOCRAT = DEMOCRAT_House,
+    REPUBLICAN = REPUBLICAN_House
+  ) %>%
+  bind_rows(
+    joined_data %>%
+      mutate(Election_Type = "Senate") %>%
+      select(state, year, Election_Type, DEMOCRAT_Senate, REPUBLICAN_Senate) %>%
+      rename(
+        DEMOCRAT = DEMOCRAT_Senate,
+        REPUBLICAN = REPUBLICAN_Senate
+      ),
+    joined_data %>%
+      mutate(Election_Type = "President") %>%
+      select(state, year, Election_Type, DEMOCRAT_President, REPUBLICAN_President) %>%
+      rename(
+        DEMOCRAT = DEMOCRAT_President,
+        REPUBLICAN = REPUBLICAN_President
+      )
+  ) %>%
+  pivot_longer(cols = c(DEMOCRAT, REPUBLICAN), names_to = "Party", values_to = "Percent") %>%
+  mutate(
+    Percent = ifelse(Party == "DEMOCRAT", -Percent, Percent)  # Assign negative values for Democrats
+  )
+
+# Create the diverging stacked bar chart
+ggplot(diverging_data, aes(x = factor(year), y = Percent, fill = Party)) +
+  geom_bar(stat = "identity", position = "stack") +
+  facet_wrap(~Election_Type, ncol = 1, scales = "free_y") +  # Allow free scaling for y-axis
+  scale_fill_manual(
+    values = c(
+      "DEMOCRAT" = "blue",
+      "REPUBLICAN" = "red"
+    ),
+    labels = c("Democrat", "Republican")
+  ) +
+  scale_y_continuous(labels = abs) +  # Display y-axis as absolute values
+  labs(
+    title = "Diverging Vote Percentages by Party Across Elections",
+    x = "Year",
+    y = "Percentage of Votes",
+    fill = "Party"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 90, hjust = 1),
+    strip.text = element_text(size = 12),
+    panel.spacing = unit(1.5, "lines")
+  )
+
+```
 
