@@ -59,13 +59,13 @@ Data Quality: There are missing or incomplete fields in some years for minor-par
 ```{r setup}
 options(repos = c(CRAN = "https://cloud.r-project.org/")) 
 install.packages("naniar")
-library(naniar)
-library(ggplot2)
 .libPaths()
 install.packages("naniar", dependencies = TRUE)
 install.packages("dplyr")
-library(dplyr)
 install.packages("DataExplorer")
+library(naniar)
+library(ggplot2)
+library(dplyr)
 library(DataExplorer)
 ```
 
@@ -170,10 +170,10 @@ house_data_grouped <- house_data |>
 house_data_grouped <- house_data_grouped |>
   mutate(
     simplified_party = case_when(
-      grepl("DEMOCRAT", party, ignore.case = TRUE) ~ "DEMOCRAT(House)",
-      grepl("REPUBLICAN", party, ignore.case = TRUE) ~ "REPUBLICAN(House)",
-      grepl("LIBERTARIAN", party, ignore.case = TRUE) ~ "LIBERTARIAN(House)",
-      TRUE ~ "OTHER(House)"
+      grepl("DEMOCRAT", party, ignore.case = TRUE) ~ "DEMOCRAT_House",
+      grepl("REPUBLICAN", party, ignore.case = TRUE) ~ "REPUBLICAN_House",
+      grepl("LIBERTARIAN", party, ignore.case = TRUE) ~ "LIBERTARIAN_House",
+      TRUE ~ "OTHER_House"
     )
   )
 
@@ -181,7 +181,6 @@ house_data_simplified <- house_data_grouped |>
   group_by(year, state, state_po, simplified_party) |>
   summarise(total_house = sum(totalvotes), vote_share = sum(vote_share)) |>
   ungroup()
-house_data_simplified
 
 house_pivoted_data <- house_data_simplified |>
   pivot_wider(
@@ -216,7 +215,12 @@ senate_pivoted_data <- senate_data_simplified |>
     names_from = party_simplified,  
     values_from = vote_share,       
     values_fill = 0                 
-  )
+  ) |>
+  rename(DEMOCRAT_Senate = "DEMOCRAT", 
+         REPUBLICAN_Senate = "REPUBLICAN",
+         LIBERTARIAN_Senate = "LIBERTARIAN",
+         OTHER_Senate = "OTHER"
+         )
 
 ```
 ```{r}
@@ -239,7 +243,12 @@ president_pivoted_data <- president_data_simplified |>
     names_from = party_simplified,  
     values_from = vote_share,       
     values_fill = 0                 
-  )
+  ) |>
+  rename(DEMOCRAT_President = "DEMOCRAT", 
+         REPUBLICAN_President = "REPUBLICAN",
+         LIBERTARIAN_President = "LIBERTARIAN",
+         OTHER_President = "OTHER"
+         )
 ```
 
 ```{r}

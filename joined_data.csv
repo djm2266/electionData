@@ -1,4 +1,4 @@
-"year","state","state_po","total_house","DEMOCRAT(House)","OTHER(House)","REPUBLICAN(House)","LIBERTARIAN(House)","total_senate","DEMOCRAT.x","LIBERTARIAN.x","OTHER.x","REPUBLICAN.x","total_president","DEMOCRAT.y","LIBERTARIAN.y","OTHER.y","REPUBLICAN.y"
+"year","state","state_po","total_house","DEMOCRAT_House","OTHER_House","REPUBLICAN_House","LIBERTARIAN_House","total_senate","DEMOCRAT_Senate","LIBERTARIAN_Senate","OTHER_Senate","REPUBLICAN_Senate","total_president","DEMOCRAT_President","LIBERTARIAN_President","OTHER_President","REPUBLICAN_President"
 1976,"ALABAMA","AL",2728482,502.53,1.04,196.42,0,0,0,0,0,0,1182850,55.73,0.13,1.53,42.61
 1976,"ALASKA","AK",118208,28.93,0.25,70.83,0,0,0,0,0,0,123574,35.65,5.49,0.95,57.9
 1976,"ARIZONA","AZ",1626123,194.64,10.85,187.66,6.85,741210,54.01,0.99,1.66,43.34,742719,39.8,1.03,2.8,56.37
