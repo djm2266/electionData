@@ -1,1 +1,50 @@
 # Results
+```{r}
+joined_data <- read.csv('joined_data.csv')
+joined_data
+```
+##Percentage Stacked Bar Chart of House Election Votes
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+# Prepare data for the percentage stacked bar chart
+house_party_data <- joined_data %>%
+  select(state, year, DEMOCRAT_House, REPUBLICAN_House, LIBERTARIAN_House, OTHER_House, total_house) %>%
+  mutate(
+    Democrat_Percent = (DEMOCRAT_House / total_house) * 100,
+    Republican_Percent = (REPUBLICAN_House / total_house) * 100,
+    Libertarian_Percent = (LIBERTARIAN_House / total_house) * 100,
+    Other_Percent = (OTHER_House / total_house) * 100
+  ) %>%
+  select(state, year, Democrat_Percent, Republican_Percent, Libertarian_Percent, Other_Percent) %>%
+  pivot_longer(cols = c(Democrat_Percent, Republican_Percent, Libertarian_Percent, Other_Percent),
+               names_to = "Party", values_to = "Percent")
+
+# Create the percentage stacked bar chart
+ggplot(house_party_data, aes(x = factor(year), y = Percent, fill = Party)) +
+  geom_bar(stat = "identity", position = "fill") +
+  scale_fill_manual(
+    values = c(
+      "Democrat_Percent" = "blue",
+      "Republican_Percent" = "red",
+      "Libertarian_Percent" = "gold",
+      "Other_Percent" = "gray"
+    ),
+    labels = c("Democrat", "Republican", "Libertarian", "Other")
+  ) +
+  labs(
+    title = "Vote Percentages by Party in House Elections (Normalized to 100%)",
+    x = "Year",
+    y = "Percentage of Votes",
+    fill = "Party"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+```
+
+
