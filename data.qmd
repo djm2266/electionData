@@ -164,7 +164,6 @@ house_data_grouped <- house_data |>
     candidatevotes = sum(candidatevotes),
     totalvotes = first(totalvotes)
   ) |>
-  mutate(vote_share = round(100*candidatevotes / totalvotes,2)) |>
   ungroup()
 
 house_data_grouped <- house_data_grouped |>
@@ -179,8 +178,10 @@ house_data_grouped <- house_data_grouped |>
 
 house_data_simplified <- house_data_grouped |>
   group_by(year, state, state_po, simplified_party) |>
-  summarise(total_house = sum(totalvotes), vote_share = sum(vote_share)) |>
-  ungroup()
+  summarise(candidate_house = sum(candidatevotes), total_house = sum(totalvotes)) |>
+  ungroup() |>
+  mutate(vote_share = round(100*candidate_house / total_house,2)) |>
+  select(-candidate_house)
 
 house_pivoted_data <- house_data_simplified |>
   pivot_wider(
@@ -190,7 +191,6 @@ house_pivoted_data <- house_data_simplified |>
   ) |>
   group_by(year, state, state_po) |>
   summarise(across(everything(), sum))
-
 ```
 ```{r}
 senate_data <- senate |> 

@@ -3,40 +3,62 @@
 joined_data <- read.csv('joined_data.csv')
 joined_data
 ```
-##Percentage Stacked Bar Chart of House Election Votes
+
+
+##Percentage Stacked Bar Chart of Election Votes
 
 ```{r}
 library(ggplot2)
 library(dplyr)
 library(tidyr)
-
-# Prepare data for the percentage stacked bar chart
-house_party_data <- joined_data %>%
-  select(state, year, DEMOCRAT_House, REPUBLICAN_House, LIBERTARIAN_House, OTHER_House, total_house) %>%
-  mutate(
-    Democrat_Percent = (DEMOCRAT_House / total_house) * 100,
-    Republican_Percent = (REPUBLICAN_House / total_house) * 100,
-    Libertarian_Percent = (LIBERTARIAN_House / total_house) * 100,
-    Other_Percent = (OTHER_House / total_house) * 100
-  ) %>%
-  select(state, year, Democrat_Percent, Republican_Percent, Libertarian_Percent, Other_Percent) %>%
-  pivot_longer(cols = c(Democrat_Percent, Republican_Percent, Libertarian_Percent, Other_Percent),
+# Combine the data for House, Senate, and President elections
+combined_data <- joined_data |>
+  mutate(Election_Type = "House") |>
+  select(state, year, Election_Type, DEMOCRAT_House, REPUBLICAN_House, LIBERTARIAN_House, OTHER_House) %>%
+  rename(
+    DEMOCRAT = DEMOCRAT_House,
+    REPUBLICAN = REPUBLICAN_House,
+    LIBERTARIAN = LIBERTARIAN_House,
+    OTHER = OTHER_House
+  ) |>
+  bind_rows(
+    joined_data |>
+      mutate(Election_Type = "Senate") |>
+      select(state, year, Election_Type, DEMOCRAT_Senate, REPUBLICAN_Senate, LIBERTARIAN_Senate, OTHER_Senate) |>
+      rename(
+        DEMOCRAT = DEMOCRAT_Senate,
+        REPUBLICAN = REPUBLICAN_Senate,
+        LIBERTARIAN = LIBERTARIAN_Senate,
+        OTHER = OTHER_Senate
+      ),
+    joined_data |>
+      mutate(Election_Type = "President") |> 
+      select(state, year, Election_Type, DEMOCRAT_President, REPUBLICAN_President, LIBERTARIAN_President, OTHER_President) |>
+      rename(
+        DEMOCRAT = DEMOCRAT_President,
+        REPUBLICAN = REPUBLICAN_President,
+        LIBERTARIAN = LIBERTARIAN_President,
+        OTHER = OTHER_President
+      )
+  ) |>
+  pivot_longer(cols = c(DEMOCRAT, REPUBLICAN, LIBERTARIAN, OTHER),
                names_to = "Party", values_to = "Percent")
 
-# Create the percentage stacked bar chart
-ggplot(house_party_data, aes(x = factor(year), y = Percent, fill = Party)) +
+# Create the faceted bar chart
+ggplot(combined_data, aes(x = factor(year), y = Percent, fill = Party)) +
   geom_bar(stat = "identity", position = "fill") +
+  facet_wrap(~Election_Type, ncol = 1) +  
   scale_fill_manual(
     values = c(
-      "Democrat_Percent" = "blue",
-      "Republican_Percent" = "red",
-      "Libertarian_Percent" = "gold",
-      "Other_Percent" = "gray"
+      "DEMOCRAT" = "blue",
+      "REPUBLICAN" = "red",
+      "LIBERTARIAN" = "gold",
+      "OTHER" = "gray"
     ),
-    labels = c("Democrat", "Republican", "Libertarian", "Other")
+    labels = c("Democrat", "Libertarian", "Other", "Republican")
   ) +
   labs(
-    title = "Vote Percentages by Party in House Elections (Normalized to 100%)",
+    title = "Vote Percentages by Party Across Elections",
     x = "Year",
     y = "Percentage of Votes",
     fill = "Party"
@@ -44,7 +66,5 @@ ggplot(house_party_data, aes(x = factor(year), y = Percent, fill = Party)) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
-
 ```
-
 
