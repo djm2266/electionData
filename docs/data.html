@@ -238,7 +238,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>package 'naniar' successfully unpacked and MD5 sums checked
 
 The downloaded binary packages are in
-    C:\Users\jingm\AppData\Local\Temp\Rtmpg7I4aE\downloaded_packages</code></pre>
+    C:\Users\jingm\AppData\Local\Temp\RtmpUZzh4o\downloaded_packages</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -260,7 +260,7 @@ The downloaded binary packages are in
 <pre><code>package 'naniar' successfully unpacked and MD5 sums checked
 
 The downloaded binary packages are in
-    C:\Users\jingm\AppData\Local\Temp\Rtmpg7I4aE\downloaded_packages</code></pre>
+    C:\Users\jingm\AppData\Local\Temp\RtmpUZzh4o\downloaded_packages</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -288,7 +288,7 @@ Permission denied</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 The downloaded binary packages are in
-    C:\Users\jingm\AppData\Local\Temp\Rtmpg7I4aE\downloaded_packages</code></pre>
+    C:\Users\jingm\AppData\Local\Temp\RtmpUZzh4o\downloaded_packages</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -302,7 +302,7 @@ The downloaded binary packages are in
 <pre><code>package 'DataExplorer' successfully unpacked and MD5 sums checked
 
 The downloaded binary packages are in
-    C:\Users\jingm\AppData\Local\Temp\Rtmpg7I4aE\downloaded_packages</code></pre>
+    C:\Users\jingm\AppData\Local\Temp\RtmpUZzh4o\downloaded_packages</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -605,8 +605,7 @@ candidatevotes     totalvotes     unofficial        version  fusion_ticket
 <span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">candidatevotes =</span> <span class="fu">sum</span>(candidatevotes),</span>
 <span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">totalvotes =</span> <span class="fu">first</span>(totalvotes)</span>
 <span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vote_share =</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>candidatevotes <span class="sc">/</span> totalvotes,<span class="dv">2</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'year', 'state', 'state_po', 'party'. You
@@ -626,8 +625,10 @@ can override using the `.groups` argument.</code></pre>
 <span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>house_data_simplified <span class="ot">&lt;-</span> house_data_grouped <span class="sc">|&gt;</span></span>
 <span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, state, state_po, simplified_party) <span class="sc">|&gt;</span></span>
-<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_house =</span> <span class="fu">sum</span>(totalvotes), <span class="at">vote_share =</span> <span class="fu">sum</span>(vote_share)) <span class="sc">|&gt;</span></span>
-<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">candidate_house =</span> <span class="fu">sum</span>(candidatevotes), <span class="at">total_house =</span> <span class="fu">sum</span>(totalvotes)) <span class="sc">|&gt;</span></span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vote_share =</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>candidate_house <span class="sc">/</span> total_house,<span class="dv">2</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>candidate_house)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'year', 'state', 'state_po'. You can
