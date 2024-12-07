@@ -151,13 +151,10 @@ senate_p
 
 The plot shows that there are no missing values in senate data, so we do not make any modification to this data. 
 
-##Data Cleaning & Aggregation
 
 ```{r}
 library(dplyr)
 library(tidyr)
-house_cleaned
-
 house_data <- house_cleaned |> 
   filter(year<=2020)
 
@@ -195,7 +192,6 @@ house_pivoted_data <- house_data_simplified |>
   group_by(year, state, state_po) |>
   summarise(across(everything(), sum))
 
-house_pivoted_data 
 ```
 ```{r}
 senate_data <- senate |> 
@@ -222,7 +218,6 @@ senate_pivoted_data <- senate_data_simplified |>
     values_fill = 0                 
   )
 
-senate_pivoted_data
 ```
 ```{r}
 president_data_grouped <- president_cleaned |>
@@ -245,8 +240,6 @@ president_pivoted_data <- president_data_simplified |>
     values_from = vote_share,       
     values_fill = 0                 
   )
-
-president_pivoted_data 
 ```
 
 ```{r}
@@ -294,7 +287,5 @@ joined_data <- state_year_tibble |>
   mutate(across(everything(), ~ replace_na(., 0.00)))
 
 write.csv(joined_data, 'joined_data.csv', row.names=FALSE)
-
-joined_data
 ```
 
