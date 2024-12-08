@@ -241,21 +241,21 @@ The choropleth map illustrates the dominant political party (Democrat or Republi
 
 ##Parallel Coordinates Plot of Margins of Victory Across Election Types
 
-```{r}
+```{r fig.only, echo=FALSE, message=FALSE, warning=FALSE}
 library(GGally)
 
 # Calculate margins of victory
-margins_data <- joined_data %>%
+margins_data <- joined_data |>
   # Select relevant columns
   select(year, state, DEMOCRAT_House, REPUBLICAN_House, LIBERTARIAN_House,
          DEMOCRAT_Senate, REPUBLICAN_Senate, LIBERTARIAN_Senate,
-         DEMOCRAT_President, REPUBLICAN_President, LIBERTARIAN_President) %>%
+         DEMOCRAT_President, REPUBLICAN_President, LIBERTARIAN_President) |>
   mutate(
     Margin_House = abs(DEMOCRAT_House - REPUBLICAN_House),
     Margin_Senate = abs(DEMOCRAT_Senate - REPUBLICAN_Senate),
     Margin_President = abs(DEMOCRAT_President - REPUBLICAN_President)
-  ) %>%
-  select(year, state, Margin_House, Margin_Senate, Margin_President) %>%
+  ) |>
+  select(year, state, Margin_House, Margin_Senate, Margin_President) |>
   filter(!is.na(Margin_House) & !is.na(Margin_Senate) & !is.na(Margin_President)) 
 
 # Create the parallel coordinate plot
@@ -281,12 +281,12 @@ The parallel coordinate plot visualizes the margins of victory across House, Sen
 
 ##Alluvial Chart of Party Preference Flow in Senate, House, and President Elections
 
-```{r}
+```{r fig.only, echo=FALSE, message=FALSE, warning=FALSE}
 library(ggalluvial)
-joined_data_filtered_house <- joined_data %>%
+joined_data_filtered_house <- joined_data |>
   filter(total_house > 0) 
 
-joined_data_filtered_house <- joined_data_filtered_house %>%
+joined_data_filtered_house <- joined_data_filtered_house |>
   mutate(dominant_party_house = case_when(
     DEMOCRAT_House > REPUBLICAN_House &
       DEMOCRAT_House > OTHER_House &
@@ -303,17 +303,17 @@ joined_data_filtered_house <- joined_data_filtered_house %>%
     TRUE ~ "Tie"
   ))
 
-state_dominant_party_house <- joined_data_filtered_house %>%
-  group_by(state) %>%
-  count(dominant_party_house) %>%
-  slice_max(n) %>%
-  ungroup() %>%
+state_dominant_party_house <- joined_data_filtered_house |>
+  group_by(state) |>
+  count(dominant_party_house) |>
+  slice_max(n) |>
+  ungroup() |>
   mutate(region = tolower(state))  
 
-joined_data_filtered_senate <- joined_data %>%
+joined_data_filtered_senate <- joined_data |>
   filter(total_senate > 0) 
 
-joined_data_filtered_senate <- joined_data_filtered_senate %>%
+joined_data_filtered_senate <- joined_data_filtered_senate |>
   mutate(dominant_party_senate = case_when(
     DEMOCRAT_Senate > REPUBLICAN_Senate &
       DEMOCRAT_Senate > OTHER_Senate &
@@ -330,25 +330,25 @@ joined_data_filtered_senate <- joined_data_filtered_senate %>%
     TRUE ~ "Tie"
   ))
 
-state_dominant_party_senate <- joined_data_filtered_senate %>%
-  group_by(state) %>%
-  count(dominant_party_senate) %>%
-  slice_max(n) %>%
-  ungroup() %>%
+state_dominant_party_senate <- joined_data_filtered_senate |>
+  group_by(state) |>
+  count(dominant_party_senate) |>
+  slice_max(n) |>
+  ungroup() |>
   mutate(region = tolower(state)) 
 
-alluvial_data <- state_dominant_party_president %>%
-  select(state, dominant_party_president = dominant_party) %>%
+alluvial_data <- state_dominant_party_president |>
+  select(state, dominant_party_president = dominant_party) |>
   left_join(
-    state_dominant_party_house %>%
+    state_dominant_party_house |>
       select(state, dominant_party_house = dominant_party_house),
     by = "state"
-  ) %>%
+  ) |>
   left_join(
-    state_dominant_party_senate %>%
+    state_dominant_party_senate |>
       select(state, dominant_party_senate = dominant_party_senate),
     by = "state"
-  ) %>%
+  ) |>
   mutate(count = 1)  
 
 ggplot(alluvial_data,
@@ -387,32 +387,29 @@ The Alluvial diagram illustrates the flow of party preferences across Senate, Ho
 ```{r}
 
 # Prepare the data
-state_votes_data <- joined_data %>%
-  select(year, state, total_house, total_senate, total_president) %>%
+state_votes_data <- joined_data |>
+  select(year, state, total_house, total_senate, total_president) |>
   mutate(
     Total_Votes = total_house + total_senate + total_president
-  ) %>%
-  group_by(year, state) %>%
-  summarise(Total_Votes = sum(Total_Votes, na.rm = TRUE), .groups = "drop") %>%
+  ) |>
+  group_by(year, state) |>
+  summarise(Total_Votes = sum(Total_Votes, na.rm = TRUE), .groups = "drop") |>
   filter(all(!is.na(Total_Votes)) & Total_Votes > 0)  # Remove years with missing or zero data
 
-# Identify outliers
-outliers <- state_votes_data %>%
-  group_by(state) %>%
-  summarise(Max_Votes = max(Total_Votes), .groups = "drop") %>%
+outliers <- state_votes_data |>
+  group_by(state) |>
+  summarise(Max_Votes = max(Total_Votes), .groups = "drop") |>
   top_n(5, Max_Votes)  # Select top 5 states with highest total votes
 
 # Create the plot
 ggplot() +
-  # Add lines for all states
   geom_line(
     data = state_votes_data,
     aes(x = year, y = Total_Votes / 1e6, group = state),
     color = "gray", size = 0.7, show.legend = FALSE
   ) +
-  # Add lines for outlier states with legend
   geom_line(
-    data = state_votes_data %>% filter(state %in% outliers$state),
+    data = state_votes_data |> filter(state %in% outliers$state),
     aes(x = year, y = Total_Votes / 1e6, color = state, group = state),
     size = 1.2
   ) +
@@ -433,7 +430,7 @@ ggplot() +
 The line chart displays the total number of votes cast in elections over time, segmented by state, with outlier states highlighted. The chart reveals that states such as California, Texas, New York, Florida, and Georgia consistently show higher total votes compared to other states, reflecting their larger populations and electoral significance. California, in particular, stands out with a sharp spike in total votes around the early 1990s and steady high turnout in subsequent years. Other large states like Texas and New York exhibit similar trends with noticeable peaks in presidential election years. The overall pattern suggests higher voter participation in populous states, especially during major national elections. In contrast, smaller states maintain relatively stable and lower vote totals over time, with limited fluctuations. These trends underscore the outsized influence of populous states in shaping electoral outcomes and highlight the importance of analyzing voter turnout patterns for understanding regional and national political dynamics.
 
 ##Boxplot Showing Distribution of Party Support Rates by State
-```{r}
+```{r fig.only, echo=FALSE, message=FALSE, warning=FALSE}
 
 boxplot_data <- joined_data |>
   filter(
@@ -488,37 +485,37 @@ The box plot displays the distribution of party support rates for Democrats, Rep
 ```{r}
 
 # Step 1: Filter and clean the data for Presidential elections
-cleaned_data <- joined_data %>%
-  select(year, state, DEMOCRAT_President, REPUBLICAN_President, total_president) %>%
-  filter(!is.na(DEMOCRAT_President) & !is.na(REPUBLICAN_President) & total_president > 0) %>%  # Remove missing or zero data
+cleaned_data <- joined_data |>
+  select(year, state, DEMOCRAT_President, REPUBLICAN_President, total_president) |>
+  filter(!is.na(DEMOCRAT_President) & !is.na(REPUBLICAN_President) & total_president > 0) |>  # Remove missing or zero data
   arrange(state, year)  # Ensure proper ordering by state and year
 
 # Step 2: Identify winning party and swings
-swing_data <- cleaned_data %>%
+swing_data <- cleaned_data |>
   mutate(
     Winning_Party = case_when(
       DEMOCRAT_President > REPUBLICAN_President ~ "Democrat",
       REPUBLICAN_President > DEMOCRAT_President ~ "Republican",
       TRUE ~ "Tie"
     )
-  ) %>%
-  group_by(state) %>%
+  ) |>
+  group_by(state) |>
   mutate(
     Previous_Winner = lag(Winning_Party),
     Swing = ifelse(Winning_Party != Previous_Winner & !is.na(Previous_Winner), "Swing", "No Swing")
-  ) %>%
+  ) |>
   ungroup()
 
 # Step 3: Summarize winning proportions by state
-swing_summary <- swing_data %>%
-  group_by(state, Winning_Party) %>%
-  summarise(Years_Won = n(), .groups = "drop") %>%
-  group_by(state) %>%
+swing_summary <- swing_data |>
+  group_by(state, Winning_Party) |>
+  summarise(Years_Won = n(), .groups = "drop") |>
+  group_by(state) |>
   mutate(Proportion = Years_Won / sum(Years_Won))
 
 # Step 4: Count swings by state
-swing_counts <- swing_data %>%
-  filter(Swing == "Swing") %>%
+swing_counts <- swing_data |>
+  filter(Swing == "Swing") |>
   count(state, name = "Swing_Count")
 
 # Step 5: Visualize the swings
@@ -547,9 +544,9 @@ library(dplyr)
 library(vcd)
 
 # Step 1: Prepare the data
-mosaic_data <- joined_data %>%
-  select(year, state, total_president, DEMOCRAT_President, REPUBLICAN_President) %>%
-  filter(!is.na(total_president) & total_president > 0) %>%
+mosaic_data <- joined_data |>
+  select(year, state, total_president, DEMOCRAT_President, REPUBLICAN_President) |>
+  filter(!is.na(total_president) & total_president > 0) |>
   mutate(
     Total_Vote_Bin = case_when(
       total_president < 1e6 ~ "Low (< 1M)",
@@ -567,7 +564,7 @@ mosaic_data <- joined_data %>%
       "Swing",
       "No Swing"
     )
-  ) %>%
+  ) |>
   filter(!is.na(Swing))  # Remove rows where Swing calculation might be invalid
 
 # Step 2: Summarize the data for a contingency table

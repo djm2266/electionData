@@ -74,7 +74,7 @@ senate <- read.csv('1976-2020-senate.csv')
 ```
 
 
-```{r fig.only, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 president_missing <- mi::missing_data.frame(president)
 image(president_missing)
 
@@ -89,9 +89,9 @@ print(redav::plot_missing(president_cleaned, num_char = 5, max_cols = 10))
 The summary of data information and the visualization of missing values in the presidential election dataset reveals that most variables are complete, with no missing values, such as year, state, and totalvotes. However, the notes variable is entirely missing (100%), which likely indicates that there were no special remarks or annotations needed for the observations. Given its lack of content and relevance, we have decided to remove this column from the dataset to streamline the analysis. Additionally, the writein variable shows a very small proportion of missing values (less than 0.1%), which are unlikely to significantly impact the dataset’s overall integrity. Since the writein column has only three missing values, which might be due to oversight during data collection or data loss, we have decided to remove the rows containing these missing values to maintain the integrity of the analysis.
 
 
-```{r fig.only, echo=FALSE, message=FALSE, warning=FALSE}
-house_missing <- mi::missing_data.frame(house)
-image(house_missing)
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#house_missing <- mi::missing_data.frame(house)
+#image(house_missing)
 
 print(redav::plot_missing(house, num_char = 5, max_cols = 10))
 
