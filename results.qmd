@@ -4,7 +4,7 @@ data <- read.csv('joined_data.csv')
 ```
 
 ##Stacked Bar Chart of Vote Percentages by Party Across Elections
-```{r fig.only, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -241,7 +241,7 @@ The choropleth map illustrates the dominant political party (Democrat or Republi
 
 ##Parallel Coordinates Plot of Margins of Victory Across Election Types
 
-```{r fig.only, echo=FALSE, message=FALSE, warning=FALSE}
+```{r}
 library(GGally)
 
 # Calculate margins of victory
@@ -281,7 +281,7 @@ The parallel coordinate plot visualizes the margins of victory across House, Sen
 
 ##Alluvial Chart of Party Preference Flow in Senate, House, and President Elections
 
-```{r fig.only, echo=FALSE, message=FALSE, warning=FALSE}
+```{r}
 library(ggalluvial)
 joined_data_filtered_house <- joined_data |>
   filter(total_house > 0) 
@@ -430,7 +430,7 @@ ggplot() +
 The line chart displays the total number of votes cast in elections over time, segmented by state, with outlier states highlighted. The chart reveals that states such as California, Texas, New York, Florida, and Georgia consistently show higher total votes compared to other states, reflecting their larger populations and electoral significance. California, in particular, stands out with a sharp spike in total votes around the early 1990s and steady high turnout in subsequent years. Other large states like Texas and New York exhibit similar trends with noticeable peaks in presidential election years. The overall pattern suggests higher voter participation in populous states, especially during major national elections. In contrast, smaller states maintain relatively stable and lower vote totals over time, with limited fluctuations. These trends underscore the outsized influence of populous states in shaping electoral outcomes and highlight the importance of analyzing voter turnout patterns for understanding regional and national political dynamics.
 
 ##Boxplot Showing Distribution of Party Support Rates by State
-```{r fig.only, echo=FALSE, message=FALSE, warning=FALSE}
+```{r}
 
 boxplot_data <- joined_data |>
   filter(
