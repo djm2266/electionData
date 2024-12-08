@@ -56,7 +56,7 @@ Data Quality: There are missing or incomplete fields in some years for minor-par
 
 ## Missing value analysis
 
-```{r setup}
+```{r setup, warning=FALSE, message=FALSE}
 options(repos = c(CRAN = "https://cloud.r-project.org/")) 
 library(ggplot2)
 .libPaths()
