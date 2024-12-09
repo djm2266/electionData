@@ -4,10 +4,39 @@
   * {
     font-family: sans-serif;
   }
-</style> 
 
-<div id="plot">
+  .bar {
+    fill: blue;
+  }
+
+  .bar:hover {
+    fill: orange;
+  }
+
+  .x-axis text {
+    font-size: 12px;
+  }
+
+  .y-axis text {
+    font-size: 12px;
+  }
+</style>
+
+## Republican Support
+
+<div id="republican-controls">
+  <button type="button" onclick="addRepublicanBar()">Add bar</button>
+  <button type="button" onclick="removeRepublicanBar()">Remove bar</button>
 </div>
+<svg id="republican-chart" width="600" height="400"></svg>
+
+## Democrat Support
+
+<div id="democrat-controls">
+  <button type="button" onclick="addDemocratBar()">Add bar</button>
+  <button type="button" onclick="removeDemocratBar()">Remove bar</button>
+</div>
+<svg id="democrat-chart" width="600" height="400"></svg>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="scripts/myscript.js"></script>
