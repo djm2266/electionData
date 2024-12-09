@@ -50,6 +50,36 @@
     ]
   },
   {
+    "objectID": "d3graph.html",
+    "href": "d3graph.html",
+    "title": "4  Interactive graph",
+    "section": "",
+    "text": "4.1 Republican Support",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Interactive graph</span>"
+    ]
+  },
+  {
+    "objectID": "d3graph.html#republican-support",
+    "href": "d3graph.html#republican-support",
+    "title": "4  Interactive graph",
+    "section": "",
+    "text": "Add bar Remove bar",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Interactive graph</span>"
+    ]
+  },
+  {
+    "objectID": "d3graph.html#democrat-support",
+    "href": "d3graph.html#democrat-support",
+    "title": "4  Interactive graph",
+    "section": "4.2 Democrat Support",
+    "text": "4.2 Democrat Support\n\nAdd bar Remove bar",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Interactive graph</span>"
+    ]
+  },
+  {
     "objectID": "conclusion.html",
     "href": "conclusion.html",
     "title": "5  Conclusion",
