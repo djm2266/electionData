@@ -56,7 +56,7 @@ Data Quality: There are missing or incomplete fields in some years for minor-par
 
 ## Missing value analysis
 
-```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 options(repos = c(CRAN = "https://cloud.r-project.org/")) 
 library(ggplot2)
 .libPaths()
@@ -67,13 +67,13 @@ remotes::install_github("jtr13/redav")
 library(mi)
 ```
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 president <- read.csv('1976-2020-president.csv')
 house <- read.csv('1976-2022-house.csv')
 senate <- read.csv('1976-2020-senate.csv')
 ```
 
-```{r fig.only, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 president_missing <- mi::missing_data.frame(president)
 image(president_missing)
 
@@ -86,7 +86,7 @@ president_cleaned <- na.omit(president_cleaned)
 The visualization of missing values in the presidential election dataset reveals that most variables are complete, with no missing values, such as year, state, and totalvotes. However, the notes variable is entirely missing (100%), which likely indicates that there were no special remarks or annotations needed for the observations. Given its lack of content and relevance, we have decided to remove this column from the dataset to streamline the analysis. Additionally, the writein variable shows a very small proportion of missing values (less than 0.1%), which are unlikely to significantly impact the dataset’s overall integrity. We have removed the rows containing these missing values to maintain the integrity of the analysis. (The first plot does not display ‘note’ as all values are missing. To keep the image clean, the second plot displays only 10 variables.)
 
 
-```{r}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 house_missing <- mi::missing_data.frame(house)
 image(house_missing)
 
@@ -107,7 +107,7 @@ house_cleaned <- house[, !(colnames(house) %in% c("runoff"))]
 
 The plot shows that the missing values in the runoff column are distributed relatively evenly across the years, suggesting that the missing data may be due to inconsistencies or issues in the data collection process. Given the high percentage of missing values in this column (28%) and its relatively low importance for our analysis, we have decided to remove the runoff column entirely to streamline the dataset and focus on more relevant variables. (To keep the image clean, the third plot displays only 10 variables.)
 
-```{r}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 print(redav::plot_missing(senate, num_char = 5, max_cols = 10))
 ```
 
