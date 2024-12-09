@@ -1,4 +1,4 @@
-# Interactive graph
+# Interactive graphs
 
 <style>
   * {
