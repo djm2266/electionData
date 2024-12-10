@@ -4,7 +4,7 @@ data <- read.csv('joined_data.csv')
 ```
 
 ##Stacked Bar Chart of Vote Percentages by Party Across Elections
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results="hide"}
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -73,7 +73,7 @@ The stacked bar chart depicts the percentage of votes received by Democrats, Rep
 
 ##Highlighted Bar Chart of State Each Party Won By Election
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results="hide"}
 
 # Prepare the data to determine the winning party
 winning_party_data <- joined_data |>
@@ -145,7 +145,7 @@ The bar chart compares the number of states won by Democrats and Republicans acr
 
 ##Line Chart of Total Votes Over the Years by Election Type
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results="hide"}
 
 # Prepare the data for all election types
 total_votes_data <- joined_data |>
@@ -190,7 +190,7 @@ The line chart illustrates total votes cast over the years across House, Senate,
 
 ##Choropleth Map of Dominant Party by State Over The Years
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results="hide"}
 joined_data_filtered <- joined_data |>
   filter(total_president > 0)
 
@@ -241,7 +241,7 @@ The choropleth map illustrates the dominant political party (Democrat or Republi
 
 ##Parallel Coordinates Plot of Margins of Victory Across Election Types
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results="hide"}
 library(GGally)
 
 # Calculate margins of victory
@@ -281,7 +281,7 @@ The parallel coordinate plot visualizes the margins of victory across House, Sen
 
 ##Alluvial Chart of Party Preference Flow in Senate, House, and President Elections
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results="hide"}
 library(ggalluvial)
 joined_data_filtered_house <- joined_data |>
   filter(total_house > 0) 
@@ -384,7 +384,7 @@ ggplot(alluvial_data,
 The Alluvial diagram illustrates the flow of party preferences across Senate, House, and Presidential elections, highlighting shifts in political dominance across states. A majority of states maintain consistent party alignment between election types, with most Democratic-leaning states (Dem) staying blue across all categories and Republican-leaning states (Rep) remaining red. However, the crossover flows between Senate and House elections indicate some variability in party preferences, suggesting that voters may differentiate between the roles of these offices when casting their ballots. Presidential elections display the most alignment with House results, reflecting a correlation between federal-level executive and legislative preferences. The overall pattern reinforces the dominance of the two-party system while highlighting the nuanced shifts that occur across election types, particularly in competitive states where control may alternate between Democrats and Republicans.
 
 ##Line Graph of Total Votes Over Years by State
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results="hide"}
 
 # Prepare the data
 state_votes_data <- joined_data |>
@@ -430,7 +430,7 @@ ggplot() +
 The line chart displays the total number of votes cast in elections over time, segmented by state, with outlier states highlighted. The chart reveals that states such as California, Texas, New York, Florida, and Georgia consistently show higher total votes compared to other states, reflecting their larger populations and electoral significance. California, in particular, stands out with a sharp spike in total votes around the early 1990s and steady high turnout in subsequent years. Other large states like Texas and New York exhibit similar trends with noticeable peaks in presidential election years. The overall pattern suggests higher voter participation in populous states, especially during major national elections. In contrast, smaller states maintain relatively stable and lower vote totals over time, with limited fluctuations. These trends underscore the outsized influence of populous states in shaping electoral outcomes and highlight the importance of analyzing voter turnout patterns for understanding regional and national political dynamics.
 
 ##Boxplot Showing Distribution of Party Support Rates by State
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results="hide"}
 
 boxplot_data <- joined_data |>
   filter(
@@ -482,7 +482,7 @@ The box plot displays the distribution of party support rates for Democrats, Rep
 
 ##Bar Chart of Total Swings by State for Presidential Elections
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results="hide"}
 
 # Step 1: Filter and clean the data for Presidential elections
 cleaned_data <- joined_data |>
@@ -539,7 +539,7 @@ The bar chart illustrates the number of presidential election swings by state, h
 
 ##Relationship Between Total Votes, Swings, and Winning Party for Presidential Elections
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results="hide"}
 library(dplyr)
 library(vcd)
 
