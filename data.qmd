@@ -117,7 +117,7 @@ print(redav::plot_missing(senate, num_char = 5, max_cols = 10))
 
 The plot shows that there are no missing values in senate data, so we do not make any modification to this data. (To keep the image clean, the plot displays only 10 variables.)
 
-```{r setup, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 library(dplyr)
 library(tidyr)
 house_data <- house_cleaned |> 
@@ -158,7 +158,7 @@ house_pivoted_data <- house_data_simplified |>
   summarise(across(everything(), sum))
 ```
 
-```{r setup, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 senate_data <- senate |> 
   filter(year<=2020)
 
@@ -190,7 +190,7 @@ senate_pivoted_data <- senate_data_simplified |>
 
 ```
 
-```{r setup, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 president_data_grouped <- president_cleaned |>
   group_by(year, state, state_po, party_simplified) |>
   summarise(
@@ -218,7 +218,7 @@ president_pivoted_data <- president_data_simplified |>
          )
 ```
 
-```{r setup, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 states <- data.frame(
   state = c(
     "ALABAMA", "ALASKA", "ARIZONA", "ARKANSAS", "CALIFORNIA", 
@@ -266,7 +266,7 @@ write.csv(joined_data, 'joined_data.csv', row.names=FALSE)
 ```
 
 
-```{r setup, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 library(jsonlite)
 democrat_data <- joined_data |>
   group_by(state_po) |>
@@ -278,7 +278,7 @@ democrat_data <- joined_data |>
 write_json(democrat_data, "democrat_support.json")
 ```
 
-```{r setup, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 republican_data <- joined_data |>
   group_by(state_po) |>
   summarise(
