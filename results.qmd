@@ -1,9 +1,7 @@
 # Results
-```{r setup, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
+```{r setup, warning=FALSE, message=FALSE, results="hide"}
 data <- read.csv('joined_data.csv')
-```
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE, results="hide"}
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -482,13 +480,13 @@ The box plot displays the distribution of party support rates for Democrats, Rep
 ##Bar Chart of Total Swings by State for Presidential Elections
 
 ```{r, message=FALSE, warning=FALSE, results="hide"}
-# Step 1: Filter and clean the data for Presidential elections
+# Filter and clean the data for Presidential elections
 cleaned_data <- joined_data |>
   select(year, state, DEMOCRAT_President, REPUBLICAN_President, total_president) |>
   filter(!is.na(DEMOCRAT_President) & !is.na(REPUBLICAN_President) & total_president > 0) |>  # Remove missing or zero data
   arrange(state, year)  # Ensure proper ordering by state and year
 
-# Step 2: Identify winning party and swings
+# Identify winning party and swings
 swing_data <- cleaned_data |>
   mutate(
     Winning_Party = case_when(
@@ -504,19 +502,19 @@ swing_data <- cleaned_data |>
   ) |>
   ungroup()
 
-# Step 3: Summarize winning proportions by state
+# Summarize winning proportions by state
 swing_summary <- swing_data |>
   group_by(state, Winning_Party) |>
   summarise(Years_Won = n(), .groups = "drop") |>
   group_by(state) |>
   mutate(Proportion = Years_Won / sum(Years_Won))
 
-# Step 4: Count swings by state
+# Count swings by state
 swing_counts <- swing_data |>
   filter(Swing == "Swing") |>
   count(state, name = "Swing_Count")
 
-# Step 5: Visualize the swings
+# Visualize the swings
 ggplot(swing_counts, aes(x = reorder(state, Swing_Count), y = Swing_Count, fill = Swing_Count)) +
   geom_bar(stat = "identity") +
   scale_fill_gradient(low = "lightblue", high = "darkblue") +
