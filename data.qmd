@@ -73,12 +73,14 @@ house <- read.csv('1976-2022-house.csv')
 senate <- read.csv('1976-2020-senate.csv')
 ```
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
+```{r, warning=FALSE, message=FALSE, results="hide"}
 president_missing <- mi::missing_data.frame(president)
 image(president_missing)
 
 print(redav::plot_missing(president, num_char = 5, max_cols = 10))
+```
 
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 president_cleaned <- president[, !(colnames(president) %in% c("notes"))]
 president_cleaned <- na.omit(president_cleaned)
 ```
@@ -86,7 +88,7 @@ president_cleaned <- na.omit(president_cleaned)
 The visualization of missing values in the presidential election dataset reveals that most variables are complete, with no missing values, such as year, state, and totalvotes. However, the notes variable is entirely missing (100%), which likely indicates that there were no special remarks or annotations needed for the observations. Given its lack of content and relevance, we have decided to remove this column from the dataset to streamline the analysis. Additionally, the writein variable shows a very small proportion of missing values (less than 0.1%), which are unlikely to significantly impact the dataset’s overall integrity. We have removed the rows containing these missing values to maintain the integrity of the analysis. (The first plot does not display ‘note’ as all values are missing. To keep the image clean, the second plot displays only 10 variables.)
 
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
+```{r, warning=FALSE, message=FALSE, results="hide"}
 house_missing <- mi::missing_data.frame(house)
 image(house_missing)
 
@@ -101,19 +103,21 @@ ggplot(runoff_missing_by_year, aes(x = factor(year), y = n)) +
     y = "Number of Missing Values") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
 
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 house_cleaned <- house[, !(colnames(house) %in% c("runoff"))]
 ```
 
 The plot shows that the missing values in the runoff column are distributed relatively evenly across the years, suggesting that the missing data may be due to inconsistencies or issues in the data collection process. Given the high percentage of missing values in this column (28%) and its relatively low importance for our analysis, we have decided to remove the runoff column entirely to streamline the dataset and focus on more relevant variables. (To keep the image clean, the third plot displays only 10 variables.)
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
+```{r, warning=FALSE, message=FALSE, results="hide"}
 print(redav::plot_missing(senate, num_char = 5, max_cols = 10))
 ```
 
-The plot shows that there are no missing values in senate data, so we do not make any modification to this data. 
+The plot shows that there are no missing values in senate data, so we do not make any modification to this data. (To keep the image clean, the plot displays only 10 variables.)
 
-```{r, warning=FALSE, message=FALSE}
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 library(dplyr)
 library(tidyr)
 house_data <- house_cleaned |> 
@@ -153,7 +157,8 @@ house_pivoted_data <- house_data_simplified |>
   group_by(year, state, state_po) |>
   summarise(across(everything(), sum))
 ```
-```{r, warning=FALSE, message=FALSE}
+
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 senate_data <- senate |> 
   filter(year<=2020)
 
@@ -185,7 +190,7 @@ senate_pivoted_data <- senate_data_simplified |>
 
 ```
 
-```{r, warning=FALSE, message=FALSE}
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 president_data_grouped <- president_cleaned |>
   group_by(year, state, state_po, party_simplified) |>
   summarise(
@@ -213,7 +218,7 @@ president_pivoted_data <- president_data_simplified |>
          )
 ```
 
-```{r, warning=FALSE, message=FALSE}
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 states <- data.frame(
   state = c(
     "ALABAMA", "ALASKA", "ARIZONA", "ARKANSAS", "CALIFORNIA", 
@@ -261,7 +266,7 @@ write.csv(joined_data, 'joined_data.csv', row.names=FALSE)
 ```
 
 
-```{r, warning=FALSE, message=FALSE}
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 library(jsonlite)
 democrat_data <- joined_data |>
   group_by(state_po) |>
@@ -273,7 +278,7 @@ democrat_data <- joined_data |>
 write_json(democrat_data, "democrat_support.json")
 ```
 
-```{r}
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 republican_data <- joined_data |>
   group_by(state_po) |>
   summarise(
